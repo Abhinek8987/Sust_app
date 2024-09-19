@@ -8,7 +8,7 @@ function Home() {
     const [data, setData] = useState([
         { name: 'Monday', el: 400, wa: 20, amt: 2400 },
         { name: 'Tuesday', el: 200, wa: 30, amt: 2210 },
-        { name: 'Wednesday', el: 1800, wa: 50, amt: 2290 },
+        { name: 'Wed', el: 1800, wa: 50, amt: 2290 },
         { name: 'Thursday', el: 1200, wa: 40, amt: 2000 },
         { name: 'Friday', el: 800, wa: 40, amt: 2181 },
         { name: 'Saturday', el: 2400, wa: 80, amt: 2500 },
