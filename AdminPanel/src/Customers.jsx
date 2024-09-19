@@ -132,7 +132,13 @@ function Customers() {
         <p><strong>Gender:</strong>Female</p>
         <p><strong>Home-Address:</strong> 123 Main St, Springfield, USA</p>
         <p><strong>Work-Address:</strong> 123 Main St, Springfield, USA</p>
+        
       </div>
+      <center>
+      <div>
+      <img class="about" src="src\R.jpeg" width="50%"></img>
+        </div>
+        </center>
      
 
       <style jsx>{`
@@ -149,6 +155,7 @@ function Customers() {
           border-radius: 8px;
           border: 1px solid #ccc;
           margin-bottom: 10px;
+          width:fit-content;
         }
       `}</style>
     </div>
