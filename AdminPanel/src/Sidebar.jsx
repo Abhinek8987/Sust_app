@@ -4,6 +4,8 @@ import
   BsListCheck, BsMenuButtonWideFill, BsFillGearFill} 
 from 'react-icons/bs';
 import { FaQuestionCircle } from "react-icons/fa";
+import { FaPhone } from "react-icons/fa";
+
 
 
 function Sidebar({ openSidebarToggle, OpenSidebar, handleNavigation }) {
@@ -55,6 +57,11 @@ function Sidebar({ openSidebarToggle, OpenSidebar, handleNavigation }) {
         <li className='sidebar-list-item'>
           <a href="">
             <FaQuestionCircle className='icon' /> FAQ
+          </a>
+        </li>
+        <li className='sidebar-list-item'>
+          <a href="">
+            <FaPhone className='icon' /> Contact Us
           </a>
         </li>
       </ul>
