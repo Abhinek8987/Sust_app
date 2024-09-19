@@ -17,6 +17,7 @@ function Home() {
 
     const [alerts, setAlerts] = useState([]);
     const [waterMessages, setWaterMessages] = useState([]);
+    const [averageCost, setAverageCost] = useState(1201);  // New state for average cost
 
     const checkLimits = (value, type) => {
         const limitEl = 2000;
@@ -41,8 +42,9 @@ function Home() {
         setWaterMessages([]);
 
         const newData = data.map((day) => {
-            const newEl = Math.floor(Math.random() * 3000);
-            const newWa = Math.floor(Math.random() * 100);
+            // Ensure newEl and newWa are greater than 0
+            const newEl = Math.floor(Math.random() * 3000) + 1;  // Minimum of 1
+            const newWa = Math.floor(Math.random() * 100) + 1;   // Minimum of 1
 
             checkLimits(newEl, "electricity");
             checkLimits(newWa, "water");
@@ -55,12 +57,16 @@ function Home() {
         });
 
         setData(newData);
+
+        // Generate random average cost between 1200 and 3000
+        const newCost = Math.floor(Math.random() * (3000 - 1200 + 1)) + 1200;
+        setAverageCost(newCost);  // Update the average cost state
     };
 
     useEffect(() => {
         const intervalId = setInterval(() => {
             randomizeData();
-        }, 30000);
+        }, 30000);  // Update data every 30 seconds
 
         return () => clearInterval(intervalId);
     }, [data]);
@@ -99,7 +105,7 @@ function Home() {
                         <h3>AVERAGE COST</h3>
                         <BsFillArchiveFill className='card_icon' />
                     </div>
-                    <h1>1201</h1>
+                    <h1>{averageCost}</h1> {/* Display the random average cost */}
                 </div>
                 <div className='card'>
                     <div className='card-inner'>

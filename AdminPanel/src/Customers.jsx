@@ -126,10 +126,12 @@ function Customers() {
   return (
     <div className="customers-page">
       <div className="customer-data">
-        <h2>Customer Information 1</h2>
+        <h2>Customer Information </h2>
         <p><strong>Name:</strong>ANETTE FERNANDES</p>
         <p><strong>Phone:</strong> 123-456-7890</p>
-        <p><strong>Address:</strong> 123 Main St, Springfield, USA</p>
+        <p><strong>Gender:</strong>Female</p>
+        <p><strong>Home-Address:</strong> 123 Main St, Springfield, USA</p>
+        <p><strong>Work-Address:</strong> 123 Main St, Springfield, USA</p>
       </div>
      
 
