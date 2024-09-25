@@ -1,9 +1,11 @@
+// App.jsx
 import { useState } from 'react';
 import './App.css';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Home from './Home';
 import Customers from './Customers';
+import ContactUs from './ContactUs'; // Import the Contact Us page
 
 function App() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
@@ -23,7 +25,9 @@ function App() {
       <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar} handleNavigation={handleNavigation} />
 
       <main className="main-content">
-        {activePage === 'home' ? <Home /> : activePage === 'customers' ? <Customers /> : null}
+        {activePage === 'home' && <Home />}
+        {activePage === 'customers' && <Customers />}
+        {activePage === 'contact' && <ContactUs />} {/* Add contact page here */}
       </main>
     </div>
   );

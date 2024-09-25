@@ -1,27 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-function ScratchCoupon() {
+function ScratchCoupon({ theme }) {
   const canvasRef = useRef(null);
   const [isScratching, setIsScratching] = useState(false);
   const [isRevealed, setIsRevealed] = useState(false);
-  const [randomPrize, setRandomPrize] = useState('');
-
+  const [randomPrize, setRandomPrize] = useState(null);
   const prizes = [
-    "🎉 Congratulations! You won $100!",
-    "🎁 You won a Free Vacation!",
-    "💰 You got a 50% Discount!",
-    "😎 Sorry, better luck next time!"
+    { message: "🎉 Congratulations! You won $100!", image: "src/code.jpg" },
+    { message: "🎁 You won a Free Vacation!", image: "src/code1.jpg" },
+    { message: "💰 You got a 50% Discount!", image: "src/code2.jpg" },
+    { message: "😎 Sorry, better luck next time!", image: "src/next.jpg" }
   ];
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
 
-    // Fill the canvas with a grey overlay
-    ctx.fillStyle = "#aaa";
+    // Fill the canvas with metallic silver overlay for scratch-off
+    ctx.fillStyle = "#C0C0C0"; // Metallic silver color #C0C0C0
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Add scratch-off effect
     const scratch = (e) => {
       if (!isScratching || isRevealed) return;
       const rect = canvas.getBoundingClientRect();
@@ -45,26 +43,25 @@ function ScratchCoupon() {
       }
 
       if (scratchedPixels / (pixels.length / 4) > 0.5 && !isRevealed) {
-        setIsRevealed(true);
-        revealPrize();  // Reveal a random prize
+        revealPrize();
       }
     };
 
     const revealPrize = () => {
       const prize = prizes[Math.floor(Math.random() * prizes.length)];
+      setIsRevealed(true);
       setRandomPrize(prize);
     };
 
-    // Add event listeners
-    const canvasElement = canvasRef.current;
-    canvasElement.addEventListener('mousemove', scratch);
-    canvasElement.addEventListener('mouseup', () => {
+    // Event listeners for scratch effect
+    canvas.addEventListener('mousemove', scratch);
+    canvas.addEventListener('mouseup', () => {
       setIsScratching(false);
       checkIfRevealed();
     });
 
     return () => {
-      canvasElement.removeEventListener('mousemove', scratch);
+      canvas.removeEventListener('mousemove', scratch);
     };
   }, [isScratching, isRevealed, prizes]);
 
@@ -73,9 +70,14 @@ function ScratchCoupon() {
       <h2>Scratch the Coupon to Reveal Your Prize!</h2>
       <div className="coupon" onMouseDown={() => setIsScratching(true)}>
         <canvas ref={canvasRef} width="300" height="200" />
-      </div>
-      <div className={`message ${isRevealed ? 'show' : ''} sparkle`}>
-        {isRevealed ? randomPrize : ''}
+        {isRevealed && randomPrize && (
+          <div className="result">
+            <div className={`message show`}>{randomPrize.message}</div>
+            <div className="prize-image">
+              <img src={randomPrize.image} alt="Prize" />
+            </div>
+          </div>
+        )}
       </div>
 
       <style jsx>{`
@@ -83,38 +85,43 @@ function ScratchCoupon() {
           position: relative;
           width: 300px;
           height: 200px;
-          background-color: #d3d3d3;
+          background-color: black;
           border-radius: 10px;
           overflow: hidden;
-          margin-top: 20px;
+          margin-top: 10px;
           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
-
+        .result {
+          position: absolute;
+          text-align: center;
+        }
         .message {
-          display: none;
-          font-size: 1.5em;
-          color:D4AF37;
-          margin-top: 20px;
+          font-size: 1.2em;
+          color: ${theme === 'light' ? '#1E90FF' : '#FF8C00'};  
+          
+          margin-bottom: 10px;
           opacity: 0;
           transition: opacity 1s ease-in-out, transform 1s ease-in-out;
         }
-
         .message.show {
-          display: block;
           opacity: 1;
           transform: translateY(-10px);
         }
-
-        .sparkle {
-          animation: sparkleEffect 1.5s infinite;
+        .prize-image img {
+          animation: bounce 2s infinite;
+          position: relative;
+          width: 295px;
+          height: 130px;
         }
-
-        @keyframes sparkleEffect {
+        @keyframes bounce {
           0%, 100% {
-            opacity: 1;
+            transform: translateY(0);
           }
           50% {
-            opacity: 0.2;
+            transform: translateY(-10px);
           }
         }
       `}</style>
@@ -122,40 +129,39 @@ function ScratchCoupon() {
   );
 }
 
-function Customers() {
+function Customers({ theme }) {
   return (
-    <div className="customers-page">
+    <div className={`customers-page ${theme}`}>
       <div className="customer-data">
-        <h2>Customer Information </h2>
-        <p><strong>Name:</strong>ANETTE FERNANDES</p>
+        <h2>Customer Information</h2>
+        <p><strong>Name:</strong> ANETTE FERNANDES</p>
         <p><strong>Phone:</strong> 123-456-7890</p>
-        <p><strong>Gender:</strong>Female</p>
+        <p><strong>Gender:</strong> Female</p>
         <p><strong>Home-Address:</strong> 123 Main St, Springfield, USA</p>
         <p><strong>Work-Address:</strong> 123 Main St, Springfield, USA</p>
-        
       </div>
       <center>
-      <div>
-      <img class="about" src="src\R.jpeg" width="50%"></img>
+        <div>
+          <img className="about" src="src/R.jpeg" alt="Customer Image" width="50%" />
         </div>
-        </center>
-     
+      </center>
 
       <style jsx>{`
-        .customers-page {
-          padding: 20px;
+        .customers-page.light {
+          background-color: #f0f0f0;
+          color: #333;
+        }
+        .customers-page.dark {
           background-color: #1f1f1f;
           color: white;
-          width: fit-content;
         }
-
         .customer-data {
-          background-color: #2f2f2f;
+          background-color: ${theme === 'light' ? '#fff' : '#2f2f2f'};
           padding: 20px;
           border-radius: 8px;
           border: 1px solid #ccc;
           margin-bottom: 10px;
-          width:fit-content;
+          width: fit-content;
         }
       `}</style>
     </div>
@@ -163,10 +169,42 @@ function Customers() {
 }
 
 function App() {
+  const [theme, setTheme] = useState('light');
+
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
   return (
-    <div className="App">
-      <ScratchCoupon />
-      <Customers />
+    <div className={`App ${theme}`}>
+      <button onClick={toggleTheme}>
+        Toggle to {theme === 'light' ? 'Dark' : 'Light'} Mode
+      </button>
+      <ScratchCoupon theme={theme} />
+      <Customers theme={theme} />
+
+      <style jsx>{`
+        .App.light {
+          background-color: #e0e0e0;
+          color: #333;
+        }
+        .App.dark {
+          background-color: #1a1a1a;
+          color: white;
+        }
+        button {
+          margin: 20px;
+          padding: 10px;
+          background-color: ${theme === 'light' ? '#007bff' : '#0056b3'};
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+        button:hover {
+          background-color: ${theme === 'light' ? '#0056b3' : '#007bff'};
+        }
+      `}</style>
     </div>
   );
 }

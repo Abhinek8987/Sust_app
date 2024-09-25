@@ -1,12 +1,7 @@
+// Sidebar.jsx
 import React from 'react';
-import 
-{BsCart3, BsGrid1X2Fill, BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, 
-  BsListCheck, BsMenuButtonWideFill, BsFillGearFill} 
-from 'react-icons/bs';
-import { FaQuestionCircle } from "react-icons/fa";
-import { FaPhone } from "react-icons/fa";
-
-
+import { BsCart3, BsGrid1X2Fill, BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, BsListCheck, BsMenuButtonWideFill, BsFillGearFill } from 'react-icons/bs';
+import { FaQuestionCircle, FaPhone } from "react-icons/fa";
 
 function Sidebar({ openSidebarToggle, OpenSidebar, handleNavigation }) {
   return (
@@ -60,7 +55,7 @@ function Sidebar({ openSidebarToggle, OpenSidebar, handleNavigation }) {
           </a>
         </li>
         <li className='sidebar-list-item'>
-          <a href="">
+          <a onClick={() => handleNavigation('contact')}> {/* Update navigation */}
             <FaPhone className='icon' /> Contact Us
           </a>
         </li>
